@@ -8,6 +8,7 @@ const Renderleader= ({leader}) =>{
            <div>
                  {leader.map((leader)=>{
                      return(
+                         <div key={leader.id}>
                         <Media >
                         <Media left middle>
                            <Media object src={leader.image} alt={leader.name}/>
@@ -18,6 +19,7 @@ const Renderleader= ({leader}) =>{
                                      <p>{leader.description}</p>
                             </Media>
                       </Media>
+                      </div>
                      )
                  }
 
