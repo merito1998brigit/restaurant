@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Card , CardImg,CardImgOverlay,CardTitle ,Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import { Card , CardImg,CardImgOverlay,CardTitle ,Breadcrumb, BreadcrumbItem, CardText, CardFooter, Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {Loading } from './Loadingcomponent';
 
   
  function RenderMenu({dish}){
@@ -12,8 +13,12 @@ import {Link} from 'react-router-dom';
 
              <CardImgOverlay>
                   <CardTitle>{dish.name}</CardTitle>
-   
+                 
+                 
             </CardImgOverlay>
+            <CardFooter>
+                  <CardText>price:${dish.price}</CardText>
+                  </CardFooter>
           </Link>
       </Card>
      )
@@ -21,7 +26,7 @@ import {Link} from 'react-router-dom';
      
  const Menu= (props)=>{
                                 
-        const menu = props.dishes.map((dish) => {
+        const menu = props.dishes.dishes.map((dish) => {
           return (
               
             <div key={dish.id} className="col-12 col-md-5 m-2">
@@ -29,7 +34,26 @@ import {Link} from 'react-router-dom';
             </div>
           );
       });
+    if(props.dishes.isLoading){
 
+      return(
+        <div className="container">
+            <div className="row">
+                  <Loading/>
+            </div>
+        </div>
+      );
+  }
+  else if(props.dishes.errMess){
+      return(
+          <div className="container">
+              <div className="row">
+                 <h4>{props.dishes.errMess}</h4>
+              </div>
+          </div>
+        );  
+  }
+  else
       return (
         <div className="container">
           <div className="row">
@@ -38,9 +62,19 @@ import {Link} from 'react-router-dom';
                             <BreadcrumbItem active>Home</BreadcrumbItem>
                 </Breadcrumb>            
                             <div className="col-12">
-                                 <h3>Menu</h3>
+                                 <h3>Menu <span> <Button>Add Dish</Button> </span></h3>
+                                  
                                  <hr />
                             </div>
+                  <Modal>
+                            <ModalHeader>
+                                      Add your own dish by filling details
+                            </ModalHeader>
+                            <ModalBody>
+
+                            </ModalBody>
+
+                  </Modal>
               
           </div>
           <div className="row d-flex justify-content-center ">

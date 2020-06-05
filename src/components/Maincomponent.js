@@ -8,7 +8,7 @@ import {Switch , Redirect, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import DishDetail from './Dishdetailcomponent';
 import About from './Aboutcomponent';
-import {addComment} from '../redux/Actioncreators';
+import {addComment,fetchDishes } from '../redux/Actioncreators';
 
 const mapStateToProps = state =>{
   return{
@@ -20,7 +20,8 @@ const mapStateToProps = state =>{
 } 
 
 const mapDispatchToProps =(dispatch) =>({
-  addComment: (dishId,rating,author,comment) => dispatch(addComment(dishId,rating,author,comment))
+  addComment: (dishId,rating,author,comment) => dispatch(addComment(dishId,rating,author,comment)),
+  fetchDishes:() => {dispatch(fetchDishes())}
 })
 
 class Main extends Component{
@@ -29,11 +30,15 @@ class Main extends Component{
   
   }
  
-
+componentDidMount(){
+  this.props.fetchDishes();
+}
   render(){
   const Homepage =() => {
     return (
-      <Home dishes={this.props.dishes.filter((dish)=>dish.featured)[0]}
+      <Home dishes={this.props.dishes.dishes.filter((dish)=>dish.featured)[0]}
+      dishesLoading={this.props.dishes.isLoading}
+      dishesErrMess={this.props.dishes.errMess}
       Promotion={this.props.Promotions.filter((prom)=>prom.featured)[0]}
       leader={this.props.leaders.filter((lead)=>lead.featured)[0]}/>
     )
@@ -41,9 +46,11 @@ class Main extends Component{
 
   const Dishwithid = ({match}) =>{
        return(
-         <DishDetail dish={this.props.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId,10))[0]}
- comments={this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId,10))}
- addComment={this.props.addComment}/>
+         <DishDetail dish={this.props.dishes.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId,10))[0]}
+         isLoading={this.props.dishes.isLoading}
+         ErrMess={this.props.dishes.errMess}
+          comments={this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId,10))}
+          addComment={this.props.addComment}/>
        )
   }
 
