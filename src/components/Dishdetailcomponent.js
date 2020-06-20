@@ -93,7 +93,7 @@ import {baseUrl} from '../shared/baseUrl';
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <RenderComments comments={props.comments}/> 
-                        <CommentForm addComment={props.addComment} dishId={props.dish.id}/>
+                        <CommentForm postComment={props.postComment} dishId={props.dish.id}/>
                     </div>
                 </div>
           </div>    
@@ -122,7 +122,7 @@ class CommentForm extends Component {
         this.setState({ModalOpen: !this.state.ModalOpen})
     }
     handleSubmit(values){
-    this.props.addComment(this.props.dishId,values.rating,values.name,values.comment);
+    this.props.postComment(this.props.dishId,values.rating,values.name,values.comment);
      this.toggleModal();
     }
     render() {

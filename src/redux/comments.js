@@ -12,8 +12,6 @@ export const Comments = (state={errMess:null,comments:[]},action) =>{
 
         case Actiontypes.ADD_COMMENT:
              var Comment = action.payload;
-             Comment.id= state.comments.length;
-             Comment.date= new Date().toISOString();
              return {...state, comments: state.comments.concat(Comment)};
         default:
             return state;
