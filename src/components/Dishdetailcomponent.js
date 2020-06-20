@@ -4,9 +4,13 @@ import { Card, CardImg, CardText, CardBody, CardTitle ,BreadcrumbItem,Breadcrumb
 import {Link} from 'react-router-dom';
 import {Loading} from './Loadingcomponent';
 import {baseUrl} from '../shared/baseUrl';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
     function RenderDish({dish}) {
             return(
+                <FadeTransform in transformprops={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+             }}>
                 <Card>
                     <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
@@ -14,6 +18,7 @@ import {baseUrl} from '../shared/baseUrl';
                       <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+                </FadeTransform>
             );
     }
 
@@ -25,17 +30,20 @@ import {baseUrl} from '../shared/baseUrl';
                       <div>
                                 <h4>comments</h4>
                                 <ul className="list-unstyled">
+                                    <Stagger in>
                                       {comments.map((comment) =>{
                                           return(
+                                              <Fade in>
                                               <li key={comment.id}>
                                                   <p>{comment.comment}</p>
                                           <p>--{comment.author} <span>{RenderDate(comment.date)}</span></p>
                                               </li>
+                                              </Fade>
                                           )
                                       }
 
                                       )}
-
+                                    </Stagger>
                                       
                                 </ul>
                       </div>
